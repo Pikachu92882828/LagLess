@@ -1,0 +1,42 @@
+name: Build LagLess
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [macos-latest, windows-latest, ubuntu-latest]
+        arch: [x64, arm64]
+        exclude:
+          - os: macos-latest
+            arch: x64
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build LagLess
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if [[ "${{ matrix.os }}" == "windows-latest" ]]; then
+            npx electron-builder --win --${{ matrix.arch }}
+          elif [[ "${{ matrix.os }}" == "macos-latest" ]]; then
+            npx electron-builder --mac --arm64
+          else
+            npx electron-builder --linux --${{ matrix.arch }}
+          fi
