@@ -1,0 +1,64 @@
+{
+  "name": "lagless",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build:ui": "vite build",
+    "build": "npm run build:ui && electron-builder",
+    "electron": "electron ."
+  },
+  "dependencies": {
+    "express": "^5.2.1",
+    "node-fetch": "^3.3.2",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "react-router-dom": "^7.11.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.1",
+    "@types/react": "^19.2.5",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^5.1.1",
+    "electron": "^39.2.7",
+    "electron-builder": "^24.13.3",
+    "eslint": "^9.39.1",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "eslint-plugin-react-refresh": "^0.4.24",
+    "globals": "^16.5.0",
+    "vite": "^7.2.4"
+  },
+  "description": "This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.",
+  "main": "electron.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "build": {
+    "appId": "com.caviar.lagless",
+    "productName": "LagLess",
+    "files": [
+      "dist/**/*",
+      "electron.js",
+      "preload.js",
+      "package.json"
+    ],
+    "mac": {
+      "icon": "LagLess.icns",
+      "target": "dmg",
+      "category": "public.app-category.utilities"
+    },
+    "win": {
+      "icon": "LagLess.png",
+      "target": "nsis"
+    },
+    "linux": {
+      "icon": "LagLess.png",
+      "target": [
+        "deb",
+        "rpm"
+      ],
+      "category": "Utility"
+    }
+  }
+}
